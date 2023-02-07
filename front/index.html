@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="loader.js"></script>
+
+  <form name="upload" method="POST" enctype="multipart/form-data" action="/upload">
+    <input type="file" name="myfile">
+    <input type="submit" name="submit" value="Upload (Start or continue)">
+  </form>
+
+  <button onclick="uploader.stop()">Stop upload</button>
+
+  <div id="result">Current status: </div>
+
+  <script>
+    function modifyResult(result) {
+      document.getElementById('result').innerHTML = result;
+      // console.log(result);
+    }
+
+    function onProgress(loaded, total) {
+      modifyResult("progress " + loaded + ' / ' + total);
+    }
+
+    let uploader;
+
+    document.forms.upload.onsubmit = async function(e) {
+      e.preventDefault();
+
+      let file = this.elements.myfile.files[0];
+      if (!file) return;
+
+      uploader = new Uploader({file, onProgress});
+
+      try {
+        let uploaded = await uploader.upload();
+
+        if (uploaded) {
+          modifyResult('success');
+        } else {
+          modifyResult('stopped');
+        }
+
+      } catch(err) {
+        console.error(err);
+        modifyResult('error');
+      }
+    };
+
+  </script>
+</body>
+</html>
+
