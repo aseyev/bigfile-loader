@@ -113,30 +113,3 @@ app.get('/status', (req, res) => {
 });
 
 app.listen(8080);
-
-//---------NOEXP
-
-
-// function onStatus(req, res) {
-  
-// }
-
-
-// function accept(req, res) {
-//   if (req.url == '/status') {
-//     onStatus(req, res);
-//   } else if (req.url == '/upload' && req.method == 'POST') {
-//     onUpload(req, res);
-//   } else {
-//     fileServer.serve(req, res);
-//   }
-
-// }
-
-// -----------------------------------
-// if (!module.parent) {
-//   http.createServer(accept).listen(8080);
-//   console.log('Server listening at port 8080');
-// } else {
-//   exports.accept = accept;
-// }
